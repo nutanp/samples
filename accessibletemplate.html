@@ -1,0 +1,91 @@
+<!Doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+
+<link rel="stylesheet" href="stylesheet/accstyle.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+<title>accessibility page</title>
+<script>
+$(document).ready(function(){
+   $('div').attr("title",'new title');
+   $('div').each(function(){
+   alert($(this).attr("id"));
+   
+   });
+});
+</script>
+</head>
+<body>
+<ul class="skiplink">
+ <li><a href="#page-main">skip to main content</a></li>
+ <li><a href="#sidebar">skip to side bar</a></li>
+ </ul>
+<div id="main-wrapper">
+
+	<header role="banner">
+	<h1>accessibility template acessibility is future<del>2022</del><ins>2016</ins></h1>
+	<nav role="navigation" aria-label="main menu">
+	<ul class="dropdown" role="menu-bar">
+	<li><a href="#">Overview</a></li>
+	<li><a href="#">Home</a></li>
+	<li><a href="#">blog</a></li>
+	 <li class="has-subnav" role="menuitem" aria-haspopup="true">
+		<a href="#" id='toplinkk3'>link3</a>
+			<ul class="reset subnav"  aria-hidden="true" role="menu">
+				<li><a href="#link31" id='toplinkk45'>submenu link3</a></li>
+				<li><a href="#link32">submenu link3</a></li>
+				<li><a href="#link33">submenu link3</a></li>
+				<li><a href="#link34">submenu link3</a></li>
+			</ul>
+	</li>
+	</ul>
+	</nav>
+	</header>
+	<section id="page-main" role="main" tabindex="-1">
+	 <form>
+	 <div id="id1">
+	  <label for="fname" >First Name *</label>
+	  <input type="text"  name="fname" id="fname" required>
+	  </div>
+	  <div>
+	  <label for="password">Password</label>
+	  <input  type="password" name="pname" id="password" aria-describedby="password-description" required>
+	  
+	  
+	  <div id="id2">
+	  <label for="bday">Birthday</label>
+	  <input  type="date" name="bday" id="bday" required>
+	  </div>
+	  <fieldset>
+	  <legend>choose shopping</legend>
+	  <input id="overnight" type="radio" name="shipping" value="overnight">
+	  <label for="overnight">overnight</label>
+	  <input id="twoday" type="radio" name="shipping" value="twoday" >
+	  <lable for="twoday">twoday</label>
+	  </fieldset>
+	   <input type="submit" name="submit" value="submit">
+		  <button>login</button>
+	 </form>
+	</section>
+
+	<aside id="sidebar" tabindex="-1">
+	side content
+	accessibili
+	accessibility
+	accessibility
+	accessibility
+	accessibility
+	accessibility
+	accessibilitytyaccessibilitytyaccessibilityty
+	
+	accessibility
+	
+	accessibilityty
+	</aside>
+	<footer>
+	footer content
+	</footer>
+</div>
+</body>
+</html>

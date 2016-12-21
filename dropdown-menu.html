@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+
+body{
+    font-family: 'calibri', sans-serif;
+	background: #fdf7f8;
+    
+}
+nav{
+    display: table;
+    margin: 0px auto;
+	}
+/* dropdown menu */
+.dropdownmenu {
+	float: left;
+	margin: 20px 0;
+}
+ul.dropdownmenu {
+    margin: 0;
+	padding: 0;
+	list-style: none;
+}
+/* Dropdowns */
+.dropdownmenu ul {
+	position: absolute;
+	left: -9999px;
+	opacity: 0;
+	transition: 0.1s linear opacity;
+	min-width: 150px;
+}
+
+.dropdownmenu li {
+	float: left;
+	position: relative;
+	background:#333;
+}
+
+/*  dropdownmenu items */
+.dropdownmenu li > a {
+	float: left;
+	padding: 10px 25px;
+	text-decoration: none;
+	color:#eee;
+}
+
+/*  hover state, preserve hover state when hovering dropdown  */
+.dropdownmenu li > a:hover,
+.dropdownmenu li > a:focus,
+.dropdownmenu li:focus > a,
+.dropdownmenu li:hover > a {
+	background: #369;
+	outline: 0;
+}
+
+.dropdownmenu li:hover ul,
+.dropdownmenu li:focus ul,
+ul.is-show {
+	left: 0;
+	opacity: 0.99;
+	top:100%
+}
+
+.dropdownmenu ul li {
+	float: none;
+	position: static;
+}
+
+.dropdownmenu ul a {
+	float: none;
+	display: block;
+	text-shadow: none;
+	transition: 0.1s linear all;
+}
+
+.dropdownmenu ul a:hover,
+.dropdownmenu ul a:focus {
+	text-shadow: none;
+	background:#369;
+}
+
+ul.subnav li
+{    background: #444;
+}
+
+ ul > li + li{
+	border-left: solid 1px #000;
+}
+.subnav > li + li{
+	border-top: solid 1px #000;
+}
+
+.subnav > li:last-child{
+	border-bottom: solid 3px #000;
+}
+
+.subnav li a{
+	padding: 8px 13px;
+}
+
+
+.reset {  
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+</style>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+ 	$('.dropdownmenu').aria_event_setup();
+});
+
+$.fn.aria_event_setup = function(settings) {
+
+	// Dynamic adding ARIA role to menubar and menu items
+	$(this).attr('role', 'menubar').find('li').attr('role', 'menuitem');
+	
+	var mainLinks = $(this).find('> li > a');
+
+	// Setting tabIndex to -1 so that main menu bar links can't receive focus until menu is open
+	$(mainLinks).next('ul').attr({ 'aria-hidden': 'true', 'role': 'menu' }).find('a').attr('tabIndex',-1);
+	
+
+	//showing sub menu on hover 
+	$(mainLinks).hover(function(){
+		$(this).next('ul').attr('aria-hidden', 'false').addClass('is-show').find('a').attr('tabIndex',0);
+	});
+    //showing sub menu on focus 
+  $(mainLinks).focus(function(){
+       $(this).next('ul').attr('aria-hidden', 'false').addClass('is-show').find('a').attr('tabIndex',0);
+	});
+	
+	// Keyboard event for navigation
+	$(mainLinks).keydown(function(event){
+	  //binding left arrow key event
+		if(event.which === 37) {
+		 	event.preventDefault();
+			// This is the first item
+			if($(this).parent('li').prev('li').length == 0) {
+				$(this).parents('ul').find('> li').last().find('a').first().focus();
+			} else {
+				$(this).parent('li').prev('li').find('a').first().focus();
+			}
+		} else if(event.which === 38) {
+		    
+			event.preventDefault();
+			if($(this).parent('li').find('ul').length > 0) {
+				$(this).parent('li').find('ul').attr('aria-hidden', 'false').addClass('is-show').find('a').attr('tabIndex',0).last().focus();
+			}
+		} else if(event.which === 39) {
+			event.preventDefault();
+			// This is the last item
+			if($(this).parent('li').next('li').length == 0) {
+				$(this).parents('ul').find('> li').first().find('a').first().focus();
+			} else {
+				$(this).parent('li').next('li').find('a').first().focus();
+			}
+		} else if(event.which === 40) {
+			event.preventDefault();
+			if($(this).parent('li').find('ul').length > 0) {
+				$(this).parent('li').find('ul').attr('aria-hidden', 'false').addClass('is-show').find('a').attr('tabIndex',0).first().focus();
+			}
+		} else if(event.which === 13 || event.which === 32) {
+			// If submenu is hidden, open it
+			event.preventDefault();
+			$(this).parent('li').find('ul[aria-hidden=true]').attr('aria-hidden', 'false').addClass('is-show').find('a').attr('tabIndex',0).first().focus();
+		} else if(event.which === 27) {
+			event.preventDefault();
+			$('.is-show').attr('aria-hidden', 'true').removeClass('is-show').find('a').attr('tabIndex',-1);
+		} 
+	});
+	
+	
+	var subLinks = $(mainLinks).parent('li').find('ul').find('a');
+	$(subLinks).keydown(function(e){
+	
+		if(event.which === 38) {
+			event.preventDefault();
+			// This is the first item
+			if($(this).parent('li').prev('li').length == 0) {
+				$(this).parents('ul').parents('li').find('a').first().focus();
+			} else {
+				$(this).parent('li').prev('li').find('a').first().focus();
+			}
+		} else if(event.which === 40) {
+			event.preventDefault();
+			if($(this).parent('li').next('li').length == 0) {
+				$(this).parents('ul').parents('li').find('a').first().focus();
+			} else {
+				$(this).parent('li').next('li').find('a').first().focus();
+			}
+		} else if(event.which === 27 || event.which === 37) {
+			event.preventDefault();
+			$(this)
+				.parents('ul').first().prev('a').focus().parents('ul').first().find('.is-show').attr('aria-hidden', 'true').removeClass('is-show').find('a').attr('tabIndex',-1);
+		} else if(event.which === 32) {
+			event.preventDefault();
+			window.location = $(this).attr('href');
+		} 
+	});
+
+		
+	// close sub menu if click or focus occurs outside of navigation
+	$(this).find('a').last().keydown(function(e){ 
+		if(event.which === 9) {
+			// If the user tabs out of the navigation hide all menus
+			$('.is-show').attr('aria-hidden', 'true').removeClass('is-show').find('a').attr('tabIndex',-1);
+		}
+	});
+
+  $(document).click(function(){ $('.is-show').attr('aria-hidden', 'true').removeClass('is-show').find('a').attr('tabIndex',-1); });
+	
+}
+
+</script>
+</head>
+<body>
+
+<nav  role="navigation" aria-label="Main menu">
+<ul class="dropdownmenu" role="menubar" >
+  <li role="menuitem" role="menuitem"><a class="active" href="#link1" id='toplinkk1'>link1</a></li>
+  <li><a href="#link2" id='toplinkk2'>link 2</a></li>
+    <li class="has-subnav" role="menuitem" aria-haspopup="true">
+		<a href="#" id='toplinkk3'>link3</a>
+			<ul class="reset subnav"  aria-hidden="true" role="menu">
+				<li><a href="#link31" id='toplinkk45'>submenu link3</a></li>
+				<li><a href="#link32">submenu link3</a></li>
+				<li><a href="#link33">submenu link3</a></li>
+				<li><a href="#link34">submenu link3</a></li>
+			</ul>
+	</li>
+</ul>
+</nav>
+
+
+</body>
+</html>

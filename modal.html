@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Login Form</title>
+		<script type="text/javascript" src="JS\script.js"></script>
+		<link rel="stylesheet" type="text/css" href="stylesheet\style.css">
+	</head>
+    <body>
+	<div id="page">
+	    <!-- Trigger The Modal -->
+		<button id="modalOpen" class="btn">Show Modal</button>
+		 <select name="cars"  id="selectid">
+						  <option value="volvo">Volvo</option>
+						  <option value="saab">Saab</option>
+						  <option value="fiat">Fiat</option>
+						  <option value="audi">Audi</option>
+					</select>
+
+		<!-- start  Modal -->
+		<div class="modalOverlay" id="modal"  aria-hidden="true" role="dialog"   aria-label="modal_title">
+              <!-- Start modal-content -->
+			  <div class="modalContent" id="modalContent" role="document">
+
+				  <h1 id="modalTitle">Modal Title</h1>
+				  <form>
+					<label for="name">Name:</label>
+					<input type="text" id="name" class="input" placeholder="Enter Name" />
+
+					<label for="email">Email:</label>
+					<input type="email" id="email" class="input" placeholder="Enter Email" />
+					 <select name="cars" id="selectid">
+						  <option value="volvo">Volvo</option>
+						  <option value="saab">Saab</option>
+						  <option value="fiat">Fiat</option>
+						  <option value="audi">Audi</option>
+					</select>
+
+					<input type="submit" class='btn' value="Submit Form" />
+				  </form>
+
+				<button class="btn-close" id="modalClose" type="button" aria-label="close">
+				  &times;
+				</button>
+
+			  </div> <!-- end modal-content -->
+
+		</div> <!-- end modal -->
+	</div>
+	</body>
+</html>	
+	
+ 	
